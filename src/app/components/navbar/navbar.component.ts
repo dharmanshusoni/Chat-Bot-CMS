@@ -16,7 +16,13 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
     moduleServiceObj: ModuleService;
-    menuItems: any[];
+    menuItems = [
+        { cclass: "",icon: "dashboard",moduleId: 1,path: "/dashboard",title: "Overview"},
+        { cclass: "",icon: "dashboard",moduleId: 1,path: "/session-table",title: "Session Table"},
+        { cclass: "",icon: "dashboard",moduleId: 1,path: "/session-analysis",title: "Session Analysis"},
+        { cclass: "",icon: "dashboard",moduleId: 1,path: "/intent-analysis",title: "Intent Analysis"},
+        { cclass: "",icon: "dashboard",moduleId: 1,path: "/forms-user-data",title: "Forms & User Data"},
+      ];
 
     constructor(location: Location, private element: ElementRef, private router: Router, moduleServiceObj: ModuleService) {
         this.location = location;
@@ -24,14 +30,14 @@ export class NavbarComponent implements OnInit {
         this.moduleServiceObj = moduleServiceObj;
     }
     GetModules() {
-        this.moduleServiceObj.GetModules(0).subscribe((res) => {
-            console.log(res);
-            if (res.count == 0) {
-            }
-            else if (res.count > 0) {
-                this.menuItems = res.data;
-            }
-        });
+        // this.moduleServiceObj.GetModules(0).subscribe((res) => {
+        //     console.log(res);
+        //     if (res.count == 0) {
+        //     }
+        //     else if (res.count > 0) {
+        //         this.menuItems = res.data;
+        //     }
+        // });
     }
     ngOnInit() {
         this.GetModules();

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FarmService } from 'app/farm/Farm.service';
 import { UsersService } from 'app/user/Users.service';
 import * as Chartist from 'chartist';
 declare var $: any;
