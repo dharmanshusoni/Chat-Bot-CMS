@@ -1,27 +1,35 @@
 import { Routes } from '@angular/router';
-
+import { FormsUserDataComponent } from 'app/forms-user-data/forms-user-data.component';
+import { IntentAnalysisComponent } from 'app/intent-analysis/intent-analysis.component';
+import { SessionAnalysisComponent } from 'app/session-analysis/session-analysis.component';
+import { SessionTableComponent } from 'app/session-table/session-table.component';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
-import { TableListComponent } from '../../table-list/table-list.component';
-import { TypographyComponent } from '../../typography/typography.component';
-import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
-import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import { LoginComponent } from '../../login/login.component';
-import { FarmComponent } from 'app/farm/farm.component';
-import { PestComponent } from 'app/pest/Pest.component';
-import { CropsComponent } from 'app/crops/crops.component';
-import { BenificialsComponent } from 'app/benificials/benificials.component';
-import { PlantationComponent } from 'app/plantation/plantation.component';
-import { FarmLayoutComponent } from 'app/farm-layout/farm-layout.component';
-import { ApplicationComponent } from 'app/application/application.component';
-import { DeceaseComponent } from 'app/Decease/decease.component';
-import { UserComponent } from 'app/user/user.component';
-import { StickeyCardComponent } from 'app/stickey-card/stickey-card.component';
-import { PestIntensityComponent } from 'app/pest-intensity/pest-intensity.component';
+// import { UserProfileComponent } from '../../user-profile/user-profile.component';
+// import { TableListComponent } from '../../table-list/table-list.component';
+// import { TypographyComponent } from '../../typography/typography.component';
+// import { IconsComponent } from '../../icons/icons.component';
+// import { MapsComponent } from '../../maps/maps.component';
+// import { NotificationsComponent } from '../../notifications/notifications.component';
+// import { UpgradeComponent } from '../../upgrade/upgrade.component';
+// import { FarmComponent } from 'app/farm/farm.component';
+// import { PestComponent } from 'app/pest/Pest.component';
+// import { CropsComponent } from 'app/crops/crops.component';
+// import { BenificialsComponent } from 'app/benificials/benificials.component';
+// import { PlantationComponent } from 'app/plantation/plantation.component';
+// import { FarmLayoutComponent } from 'app/farm-layout/farm-layout.component';
+// import { ApplicationComponent } from 'app/application/application.component';
+// import { DeceaseComponent } from 'app/Decease/decease.component';
+// import { UserComponent } from 'app/user/user.component';
+// import { StickeyCardComponent } from 'app/stickey-card/stickey-card.component';
+// import { PestIntensityComponent } from 'app/pest-intensity/pest-intensity.component';
 
 export const AdminLayoutRoutes: Routes = [
+    { path: 'dashboard',      component: DashboardComponent },
+    { path: 'session-table',      component: SessionTableComponent },
+    { path: 'session-analysis',      component: SessionAnalysisComponent },
+    { path: 'intent-analysis',      component: IntentAnalysisComponent },
+    { path: 'forms-user-data',      component: FormsUserDataComponent },
+
     // {
     //   path: '',
     //   children: [ {
@@ -64,25 +72,25 @@ export const AdminLayoutRoutes: Routes = [
     //         component: UpgradeComponent
     //     }]
     // }
-    { path: 'dashboard',      component: DashboardComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'farm',           component: FarmComponent },
-    { path: 'pest',           component: PestComponent },
-    { path: 'crops',          component: CropsComponent },
-    { path: 'pest-intensity', component: PestIntensityComponent },
-    { path: 'benificials',    component: BenificialsComponent },
-    { path: 'plantation',     component: PlantationComponent },
-    { path: 'farm-layout',    component: FarmLayoutComponent },
-    { path: 'application',    component: ApplicationComponent },
-    { path: 'decease',        component: DeceaseComponent },
-    { path: 'users',          component: UserComponent },
-    { path: 'stickey-card',   component: StickeyCardComponent },
 
-    { path: 'table-list',     component: TableListComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
+    // { path: 'user-profile',   component: UserProfileComponent },
+    // { path: 'farm',           component: FarmComponent },
+    // { path: 'pest',           component: PestComponent },
+    // { path: 'crops',          component: CropsComponent },
+    // { path: 'pest-intensity', component: PestIntensityComponent },
+    // { path: 'benificials',    component: BenificialsComponent },
+    // { path: 'plantation',     component: PlantationComponent },
+    // { path: 'farm-layout',    component: FarmLayoutComponent },
+    // { path: 'application',    component: ApplicationComponent },
+    // { path: 'decease',        component: DeceaseComponent },
+    // { path: 'users',          component: UserComponent },
+    // { path: 'stickey-card',   component: StickeyCardComponent },
+
+    // { path: 'table-list',     component: TableListComponent },
+    // { path: 'typography',     component: TypographyComponent },
+    // { path: 'icons',          component: IconsComponent },
+    // { path: 'maps',           component: MapsComponent },
+    // { path: 'notifications',  component: NotificationsComponent },
+    // { path: 'upgrade',        component: UpgradeComponent },
     // { path: 'login',          component: LoginComponent },
 ];

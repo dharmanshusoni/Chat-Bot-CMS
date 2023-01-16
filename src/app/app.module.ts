@@ -24,6 +24,10 @@ import {
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HomeComponent } from './home/home.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { SessionTableComponent } from './session-table/session-table.component';
+import { SessionAnalysisComponent } from './session-analysis/session-analysis.component';
+import { IntentAnalysisComponent } from './intent-analysis/intent-analysis.component';
+import { FormsUserDataComponent } from './forms-user-data/forms-user-data.component';
 
 
 @NgModule({
@@ -44,6 +48,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
     AppComponent,
     AdminLayoutComponent,
     HomeComponent,
+    SessionTableComponent,
+    SessionAnalysisComponent,
+    IntentAnalysisComponent,
+    FormsUserDataComponent,
     
   ],
   providers: [],
