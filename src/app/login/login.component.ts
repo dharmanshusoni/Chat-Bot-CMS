@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModuleService } from 'app/components/sidebar/module.service';
 import { SidebarComponent } from 'app/components/sidebar/sidebar.component';
+import { Subscription } from 'rxjs';
 import { LoginService } from './login.service';
 declare var $: any;
 
@@ -16,8 +17,9 @@ export class LoginComponent implements OnInit {
   moduleServiceObj: ModuleService;
   userModel: any;
   bot_id:any;
-
-  constructor(loginServiceObj: LoginService,moduleServiceObj: ModuleService,private router: Router) {
+  client:string;
+  private routeSub: Subscription;
+  constructor(private route: ActivatedRoute,loginServiceObj: LoginService,moduleServiceObj: ModuleService,private router: Router) {
     this.userModel = {};
     this.loginServiceObj = loginServiceObj;
     this.moduleServiceObj = moduleServiceObj;
@@ -27,10 +29,20 @@ export class LoginComponent implements OnInit {
     this.userModel = {};
     this.userModel.email = '';
     this.userModel.password = '';
+    this.userModel.client = this.client;
   }
 
   ngOnInit() {
-    this.initialize();
+    this.routeSub = this.route.params.subscribe(params => {
+      this.client = params['client'];
+      this.initialize();
+      if(this.client == undefined || this.client == 'undefined' || this.client == '' || this.client == null || this.client == 'null'){
+        this.showNotification("Error while fetching url", 4);
+      }
+      if(this.client == 'company'){
+        this.showNotification("Type company in URL {company}", 3);
+      }
+    });
   }
 
   signin() {

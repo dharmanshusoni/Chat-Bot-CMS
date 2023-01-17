@@ -10,7 +10,7 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'login/company',
     pathMatch: 'full',
   }, 
   {
@@ -21,12 +21,8 @@ const routes: Routes =[
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
     }]
   },
-  // {
-  //   path: 'home',
-  //   component: LoginComponent
-  // },
   {
-    path: 'login',
+    path: 'login/:client',
     component: LoginComponent
   },
 ];
