@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   loginServiceObj: LoginService;
   moduleServiceObj: ModuleService;
   userModel: any;
-  userId:any;
+  bot_id:any;
 
   constructor(loginServiceObj: LoginService,moduleServiceObj: ModuleService,private router: Router) {
     this.userModel = {};
@@ -25,9 +25,8 @@ export class LoginComponent implements OnInit {
 
   initialize() {
     this.userModel = {};
-    this.userModel.id = 0;
-    this.userModel.Username = '';
-    this.userModel.Password = '';
+    this.userModel.email = '';
+    this.userModel.password = '';
   }
 
   ngOnInit() {
@@ -37,16 +36,14 @@ export class LoginComponent implements OnInit {
   signin() {
     this.loginServiceObj.Login(this.userModel).subscribe((res) => {
       console.log(res);
-      if (res.count == 0) {
-        this.showNotification(res.message, 4);
+      if (res.status == 'Success') {
+        this.showNotification('Logged In Successfull', 2);
+        this.bot_id = res.bot_id;
+        sessionStorage.setItem('LoginBot', res.bot_id); 
+        this.router.navigateByUrl('/dashboard');
       }
-      else if (res.count > 0) {
-        if (res.data[0].id > 0) {
-          this.showNotification('Logged In Successfull', 2);
-          this.userId = res.data[0].id;
-          sessionStorage.setItem('userId', this.userId); 
-          this.router.navigateByUrl('/dashboard');
-        }
+      else {
+        this.showNotification(res.message, 4);
       }
     });
   }

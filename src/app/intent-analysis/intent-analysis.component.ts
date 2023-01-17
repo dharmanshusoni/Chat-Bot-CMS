@@ -12,10 +12,10 @@ export class IntentAnalysisComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.TotalUniqueBotVisits();
+    this.TopIntents();
   }
 
-  TotalUniqueBotVisits() {
+  TopIntents() {
     var datawebsiteViewsChart = {
       labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       series: [
@@ -28,6 +28,7 @@ export class IntentAnalysisComponent implements OnInit {
         showGrid: false,
         offset:100
       },
+      seriesBarDistance: 10,
       low: 0,
       high: 10,
       chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
@@ -42,8 +43,8 @@ export class IntentAnalysisComponent implements OnInit {
         }
       }]
     ];
-    var TotalUniqueBotVisits = new Chartist.Bar('#TotalUniqueBotVisits', datawebsiteViewsChart, optionswebsiteViewsChart,responsiveOptions);
-    this.startAnimationForBarChart(TotalUniqueBotVisits);
+    var TopIntents = new Chartist.Bar('#TopIntents', datawebsiteViewsChart, optionswebsiteViewsChart,responsiveOptions);
+    this.startAnimationForBarChart(TopIntents);
   }
 
   startAnimationForBarChart(chart) {

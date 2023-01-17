@@ -145,7 +145,7 @@ export class NavbarComponent implements OnInit {
         return 'Login';
     }
     logout() {
-        sessionStorage.setItem('userId', null);
+        sessionStorage.setItem('LoginBot', null);
         this.router.navigateByUrl('/login');
     }
 }

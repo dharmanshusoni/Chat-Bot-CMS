@@ -9,6 +9,8 @@ export const environment = {
   // appURL : 'https://localhost:4200/',
 
   apiBASE : 'http://edumobiapp-002-site4.ftempurl.com/',
-  apiURL : 'http://edumobiapp-002-site4.ftempurl.com/api/v1/',
+  //apiURL : 'http://edumobiapp-002-site4.ftempurl.com/api/v1/',
   appURL : 'http://edumobiapp-002-site5.ftempurl.com/',
+
+  apiURL : 'http://103.190.95.226:8002/',
 };

@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   profileServiceObj: UsersService;
   userList: any;
   userTypeList: any;
-  userId: any;
+  LoginBot: any;
   weekNoFilter:'';
   yearFilter:'';
   years = [2020,2021,2022];
@@ -85,15 +85,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
       /* ----------==========     Session Login    ==========---------- */
 
-      if(sessionStorage.getItem('userId') == null || sessionStorage.getItem('userId') == undefined
-      || sessionStorage.getItem('userId') == 'null' || sessionStorage.getItem('userId') == 'undefined'){
+      if(sessionStorage.getItem('LoginBot') == null || sessionStorage.getItem('LoginBot') == undefined
+      || sessionStorage.getItem('LoginBot') == 'null' || sessionStorage.getItem('LoginBot') == 'undefined'){
         this.router.navigateByUrl('/login');
       }
       else{
-        console.log('user logged in : '+sessionStorage.getItem('userId'));
-        this.getUserType(0);
-        this.userId = sessionStorage.getItem('userId');
-       this.getAllUsers();
+        console.log('user logged in : '+sessionStorage.getItem('LoginBot'));
+        this.LoginBot = sessionStorage.getItem('LoginBot');
       }
      
 
@@ -177,33 +175,6 @@ export class DashboardComponent implements OnInit {
 
       var websiteViewsChartChannelWise = new Chartist.Bar('#websiteViewsChartChannelWise', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
       this.startAnimationForBarChart(websiteViewsChartChannelWise);
-  }
-
-  getUserType(userTypeId){
-    this.profileServiceObj.getUserType(userTypeId).subscribe((res) => {
-      if (res.count == 0) {
-        this.showNotification(res.message, 4);
-      }
-      else if (res.count > 0) {
-          this.userTypeList = res.data;
-        }
-    });
-  }
-
-  getAllUsers() {
-    this.profileServiceObj.getUserDetail(this.userId,0).subscribe((res) => {
-      if (res.count == 0) {
-        this.showNotification(res.message, 4);
-      }
-      else if (res.count > 0) {
-          this.userList = res.data;
-      }
-    });
-  }
-
-  counter(i: number) {
-    if(i>0)
-      return new Array(i+1);
   }
 
   showNotification(Message, type) {
