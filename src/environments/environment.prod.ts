@@ -13,4 +13,5 @@ export const environment = {
   appURL : 'http://edumobiapp-002-site5.ftempurl.com/',
 
   apiURL : 'http://103.190.95.226:8002/',
+  api_Overview_URL : 'http://103.190.95.226:8003/',
 };
