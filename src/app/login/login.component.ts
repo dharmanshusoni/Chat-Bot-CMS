@@ -52,7 +52,11 @@ export class LoginComponent implements OnInit {
         this.showNotification('Logged In Successfull', 2);
         this.bot_id = res.bot_id;
         res.client = this.client;
-        sessionStorage.setItem('LoginBot', res); 
+        var request_bot = {
+          bot_id:res.bot_id,
+          client:this.client
+        }
+        sessionStorage.setItem('LoginBot', JSON.stringify(request_bot)); 
         this.router.navigateByUrl('/dashboard');
       }
       else {

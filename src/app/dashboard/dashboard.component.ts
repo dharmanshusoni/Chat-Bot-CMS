@@ -14,10 +14,18 @@ export class DashboardComponent implements OnInit {
 
   dashboardServiceObj: DashboardService;
   LoginBot: any;
-  overview : any;
   weekNoFilter: '';
   yearFilter: '';
   years = [2020, 2021, 2022];
+  
+  overview = {
+    complete_summary: {
+      total_sessions: 0,
+      current_active_sessions: 0,
+      ended_sessions: 0,
+      average_session_length: 0
+    }
+  };
 
   constructor(dashboardServiceObj: DashboardService, private router: Router, private http: HttpClient) {
     this.dashboardServiceObj = dashboardServiceObj;
@@ -89,11 +97,9 @@ export class DashboardComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else {
-      console.log('user logged in : ' + sessionStorage.getItem('LoginBot'));
       this.LoginBot = sessionStorage.getItem('LoginBot');
       this.dashboardServiceObj.GetOverview(this.LoginBot ).subscribe((res) => {
-        console.log(res);
-        if (res.status == 'Success') {
+        if (!res.hasOwnProperty('status')) {
           this.overview.complete_summary = res.complete_summary;
         }
         else {
