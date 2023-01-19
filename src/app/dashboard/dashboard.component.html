@@ -8,14 +8,12 @@
                           <i class="material-icons">content_copy</i>
                       </div>
                       <p class="card-category">Total Sessions</p>
-                      <h3 class="card-title">50
-                          <!-- <small>U</small> -->
-                      </h3>
+                      <h3 class="card-title">{{this.overview.complete_summary.total_sessions}}<!-- <small>U</small> --></h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          <i class="material-icons text-danger">warning</i>
-                          <a href="javascript:void(0)">Get More Space...</a>
+                          <i class="material-icons text-danger">warning</i>Just Updated
+                          <!-- <a href="javascript:void(0)">Get More Space...</a> -->
                       </div>
                   </div>
               </div>
@@ -27,11 +25,11 @@
                           <i class="material-icons">store</i>
                       </div>
                       <p class="card-category">Current Active Session</p>
-                      <h3 class="card-title">100</h3>
+                      <h3 class="card-title">{{this.overview.complete_summary.current_active_sessions}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          <i class="material-icons">date_range</i> Last 24 Hours
+                          <i class="material-icons">date_range</i> Just Updated
                       </div>
                   </div>
               </div>
@@ -43,11 +41,11 @@
                           <i class="material-icons">info_outline</i>
                       </div>
                       <p class="card-category">Average Session Length</p>
-                      <h3 class="card-title">75</h3>
+                      <h3 class="card-title">{{this.overview.complete_summary.average_session_length}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          <i class="material-icons">local_offer</i> Tracked from Github
+                          <i class="material-icons">local_offer</i> Just Updated
                       </div>
                   </div>
               </div>
@@ -58,8 +56,8 @@
                       <div class="card-icon">
                           <i class="fa fa-twitter"></i>
                       </div>
-                      <p class="card-category">Followers</p>
-                      <h3 class="card-title">+245</h3>
+                      <p class="card-category">Ended Sessions</p>
+                      <h3 class="card-title">{{this.overview.complete_summary.ended_sessions}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">

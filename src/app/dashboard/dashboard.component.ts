@@ -13,9 +13,8 @@ declare var $: any;
 export class DashboardComponent implements OnInit {
 
   dashboardServiceObj: DashboardService;
-  userList: any;
-  userTypeList: any;
   LoginBot: any;
+  overview : any;
   weekNoFilter: '';
   yearFilter: '';
   years = [2020, 2021, 2022];
@@ -95,6 +94,7 @@ export class DashboardComponent implements OnInit {
       this.dashboardServiceObj.GetOverview(this.LoginBot ).subscribe((res) => {
         console.log(res);
         if (res.status == 'Success') {
+          this.overview.complete_summary = res.complete_summary;
         }
         else {
           this.showNotification(res.message, 4);
