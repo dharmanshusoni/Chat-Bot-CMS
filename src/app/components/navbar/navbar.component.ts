@@ -145,7 +145,8 @@ export class NavbarComponent implements OnInit {
         return 'Login';
     }
     logout() {
+        var LoginBot = JSON.parse(sessionStorage.getItem('LoginBot'));
         sessionStorage.setItem('LoginBot', null);
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/login/'+LoginBot.client);
     }
 }
