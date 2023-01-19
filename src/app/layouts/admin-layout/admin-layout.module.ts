@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
@@ -18,23 +17,25 @@ import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/mate
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatSelectModule} from '@angular/material/select';
 import { LoginComponent } from 'app/login/login.component';
-import { FarmComponent } from 'app/farm/farm.component';
-import { PestComponent } from 'app/pest/Pest.component';
-import { CropsComponent } from 'app/crops/crops.component';
-import { BenificialsComponent } from 'app/benificials/benificials.component';
-import { PlantationComponent } from 'app/plantation/plantation.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { FarmLayoutComponent } from 'app/farm-layout/farm-layout.component';
 import { DatePipe } from '@angular/common';
-import { ApplicationComponent } from 'app/application/application.component';
-import { DeceaseComponent } from 'app/Decease/decease.component';
 import { MatCheckboxModule} from '@angular/material/checkbox';
-import { UserComponent } from 'app/user/user.component';
-import { StickeyCardComponent } from 'app/stickey-card/stickey-card.component';
-import { PestIntensityComponent } from 'app/pest-intensity/pest-intensity.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatIconModule} from '@angular/material/icon';
+
+// import { UserComponent } from 'app/user/user.component';
+// import { StickeyCardComponent } from 'app/stickey-card/stickey-card.component';
+// import { PestIntensityComponent } from 'app/pest-intensity/pest-intensity.component';
+// import { ApplicationComponent } from 'app/application/application.component';
+// import { DeceaseComponent } from 'app/Decease/decease.component';
+// import { FarmLayoutComponent } from 'app/farm-layout/farm-layout.component';
+// import { BenificialsComponent } from 'app/benificials/benificials.component';
+// import { PlantationComponent } from 'app/plantation/plantation.component';
+// import { FarmComponent } from 'app/farm/farm.component';
+// import { PestComponent } from 'app/pest/Pest.component';
+// import { CropsComponent } from 'app/crops/crops.component';
+// import { UserProfileComponent } from '../../user-profile/user-profile.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,6 @@ import {MatIconModule} from '@angular/material/icon';
   ],
   declarations: [
     DashboardComponent,
-    UserProfileComponent,
     TableListComponent,
     TypographyComponent,
     IconsComponent,
@@ -64,17 +64,18 @@ import {MatIconModule} from '@angular/material/icon';
     NotificationsComponent,
     UpgradeComponent,
     LoginComponent,
-    FarmComponent,
-    PestComponent,
-    CropsComponent,
-    BenificialsComponent,
-    PlantationComponent,
-    FarmLayoutComponent,
-    ApplicationComponent,
-    DeceaseComponent,
-    UserComponent,
-    StickeyCardComponent,
-    PestIntensityComponent
+    // FarmComponent,
+    // PestComponent,
+    // CropsComponent,
+    // BenificialsComponent,
+    // PlantationComponent,
+    // FarmLayoutComponent,
+    // ApplicationComponent,
+    // DeceaseComponent,
+    // UserComponent,
+    // StickeyCardComponent,
+    // PestIntensityComponent,
+    // UserProfileComponent,
   ],
   providers: [
     DatePipe,

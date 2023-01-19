@@ -51,7 +51,8 @@ export class LoginComponent implements OnInit {
       if (res.status == 'Success') {
         this.showNotification('Logged In Successfull', 2);
         this.bot_id = res.bot_id;
-        sessionStorage.setItem('LoginBot', res.bot_id); 
+        res.client = this.client;
+        sessionStorage.setItem('LoginBot', res); 
         this.router.navigateByUrl('/dashboard');
       }
       else {

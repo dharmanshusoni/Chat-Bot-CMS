@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsersService } from 'app/user/Users.service';
 import * as Chartist from 'chartist';
 import { DashboardService } from './dashboard.service';
 declare var $: any;
@@ -93,10 +92,7 @@ export class DashboardComponent implements OnInit {
     else {
       console.log('user logged in : ' + sessionStorage.getItem('LoginBot'));
       this.LoginBot = sessionStorage.getItem('LoginBot');
-      var req = {
-        bot_id : sessionStorage.getItem('LoginBot') 
-      }
-      this.dashboardServiceObj.GetOverview(req).subscribe((res) => {
+      this.dashboardServiceObj.GetOverview(this.LoginBot ).subscribe((res) => {
         console.log(res);
         if (res.status == 'Success') {
         }
