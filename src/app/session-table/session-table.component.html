@@ -1,1 +1,64 @@
-<p>session-table works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Session Table</h4>
+                        <p class="card-category"> Here is a chat bot sessions</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table" >
+                                <thead class=" text-primary">
+                                    <th>Session ID</th>
+                                    <th>Inti TIme</th>
+                                    <th>Exit Time</th>
+                                    <th>Duration</th>
+                                    <th>Last Intent</th>
+                                    <th>Status</th>
+                                    <th>History</th>
+                                </thead>
+                                <tbody *ngFor="let item of sessionData">
+                                    <tr>
+                                        <td>{{item._id}}</td>
+                                        <td>{{item.init_time}}</td>
+                                        <td>{{item.exit_time}}</td>
+                                        <td>{{item.session_duration}}</td>
+                                        <td>{{item.last_intent}}</td>
+                                        <td>{{item.session_status}}</td>
+                                        <td class="text-primary" style="cursor: pointer;">
+                                            <span (click)="getID(item._id)" >View History</span>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="item._id == showID" >
+                                        <td id="{{item._id}}" colspan="7">
+                                            <table class="table" style="background-color: rgb(247, 247, 247);border: 1px solid #9c27b0 ">
+                                                <thead class=" text-primary">
+                                                    <th>Sentiment</th>
+                                                    <th>User Response</th>
+                                                </thead>
+                                                <tbody *ngFor="let hitem of item.history">
+                                                    <td>
+                                                        {{hitem.sentiment}}
+                                                    </td>
+                                                    <td>
+                                                        {{hitem.user_response}}
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table">
+                                <!-- <thead></thead> -->
+                               
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
