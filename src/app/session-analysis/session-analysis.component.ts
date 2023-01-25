@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as Chartist from 'chartist';
+import { SessionAnalysisService } from './sessionanalysis.service';
 declare var $: any;
 
 @Component({
@@ -10,6 +12,9 @@ declare var $: any;
 })
 export class SessionAnalysisComponent implements OnInit {
 
+  sessionanalysisObj: SessionAnalysisService;
+  sessionData:any;
+  LoginBot: any;
   range = ['Monthly','Yearly']
   dateForm = this.formBuilder.group({
     rangeType:'',
@@ -20,102 +25,150 @@ export class SessionAnalysisComponent implements OnInit {
 
   }); 
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,sessionanalysisObj: SessionAnalysisService,private router: Router) {
+    this.sessionanalysisObj = sessionanalysisObj;
+   }
 
   ngOnInit(): void {
-    this.TotalUniqueBotVisits();
-    this.TotalBotConversation();
-    this.InteractionRate();
+    if (sessionStorage.getItem('LoginBot') == null || sessionStorage.getItem('LoginBot') == undefined
+      || sessionStorage.getItem('LoginBot') == 'null' || sessionStorage.getItem('LoginBot') == 'undefined') {
+      this.router.navigateByUrl('/login');
+    }
+    else {
+      
+      this.LoginBot = sessionStorage.getItem('LoginBot');
+      const body = JSON.parse(this.LoginBot);
+
+      this.TotalUniqueBotVisits(body);
+      this.TotalBotConversation(body);
+      this.InteractionRate(body);
+
+    }
+
   }
 
-  TotalUniqueBotVisits(){
-    var datawebsiteViewsChart = {
-      labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-      series: [
-        [5, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-        //[5, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]// comparison bar chart 
-      ]
-    };
-    var optionswebsiteViewsChart = {
-        axisX: {
-            showGrid: false
-        },
-        low: 0,
-        high: 1000,
-        chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
-    };
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
-        }
-      }]
-    ];
-    var TotalUniqueBotVisits = new Chartist.Bar('#TotalUniqueBotVisits', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
-    this.startAnimationForBarChart(TotalUniqueBotVisits);
+  TotalUniqueBotVisits(body){
+    body.start_date = "";
+    body.end_date = "";
+    body.format = 'day';
+
+    this.sessionanalysisObj.GetSessionAnalysis(body).subscribe((res) => {
+      console.log(res);
+      if (true){//(!res.hasOwnProperty('status')) {
+
+        var datawebsiteViewsChart = {
+          labels: res.total_unique_bot_visits.labels,
+          series: [
+            res.total_unique_bot_visits.series,
+          ]
+        };
+        var optionswebsiteViewsChart = {
+            axisX: {
+                showGrid: false
+            },
+            low: 0,
+            high: 10,
+            chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
+        };
+        var responsiveOptions: any[] = [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0];
+              }
+            }
+          }]
+        ];
+        var TotalUniqueBotVisits = new Chartist.Bar('#TotalUniqueBotVisits', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+        this.startAnimationForBarChart(TotalUniqueBotVisits);
+      }
+      else {
+        this.showNotification(res.message, 4);
+      }
+    });
   }
 
-  TotalBotConversation(){
-    var datawebsiteViewsChart = {
-      labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-      series: [
-        [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+  TotalBotConversation(body){
+    body.start_date = "";
+    body.end_date = "";
+    body.format = 'day';
+    
+    this.sessionanalysisObj.GetSessionAnalysis(body).subscribe((res) => {
+      if (true) {
 
-      ]
-    };
-    var optionswebsiteViewsChart = {
-        axisX: {
+        var datawebsiteViewsChart = {
+          labels: res.total_convo.labels,
+          series: [
+            res.total_convo.series
+          ]
+        };
+        var optionswebsiteViewsChart = {
+          axisX: {
             showGrid: false
-        },
-        low: 0,
-        high: 1000,
-        chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
-    };
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
-        }
-      }]
-    ];
-    var TotalBotConversation = new Chartist.Bar('#TotalBotConversation', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
-    this.startAnimationForBarChart(TotalBotConversation);
+          },
+          low: 0,
+          high: 10,
+          chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
+        };
+        var responsiveOptions: any[] = [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0];
+              }
+            }
+          }]
+        ];
+        var TotalBotConversation = new Chartist.Bar('#TotalBotConversation', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+        this.startAnimationForBarChart(TotalBotConversation);
+      }
+      else {
+        this.showNotification(res.message, 4);
+      }
+    });
   }
 
-  InteractionRate(){
-    var datawebsiteViewsChart = {
-      labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-      series: [
-        [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+  InteractionRate(body){
+    body.start_date = "";
+    body.end_date = "";
+    body.format = 'day';
 
-      ]
-    };
-    var optionswebsiteViewsChart = {
-        axisX: {
+    this.sessionanalysisObj.GetSessionAnalysis(body).subscribe((res) => {
+      console.log(res);
+      if (true) {
+        var datawebsiteViewsChart = {
+          labels: res.interaction_rate.labels,
+          series: [
+            res.interaction_rate.series
+          ]
+        };
+        var optionswebsiteViewsChart = {
+          axisX: {
             showGrid: false
-        },
-        low: 0,
-        high: 1000,
-        chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
-    };
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
-        }
-      }]
-    ];
-    var InteractionRate = new Chartist.Bar('#InteractionRate', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
-    this.startAnimationForBarChart(InteractionRate);
+          },
+          low: 0,
+          high: 150,
+          chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
+        };
+        var responsiveOptions: any[] = [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0];
+              }
+            }
+          }]
+        ];
+        var InteractionRate = new Chartist.Bar('#InteractionRate', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+        this.startAnimationForBarChart(InteractionRate);
+      }
+      else {
+        this.showNotification(res.message, 4);
+      }
+    });
   }
 
   startAnimationForBarChart(chart) {
@@ -147,4 +200,30 @@ export class SessionAnalysisComponent implements OnInit {
     this.dateForm.reset();
   }
 
+  showNotification(Message, type) {
+    const types = ['', 'info', 'success', 'warning', 'danger'];
+    $.notify({
+      icon: "notifications",
+      message: Message
+
+    }, {
+      type: types[type],
+      timer: 1000,
+      placement: {
+        from: 'top',
+        align: 'center'
+      },
+      template:
+        '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">notifications</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
+    });
+  }
 }

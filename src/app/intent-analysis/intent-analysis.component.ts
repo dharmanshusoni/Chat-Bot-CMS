@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as Chartist from 'chartist';
+import { IntentAnalysisService } from './intentanalysis.service';
 declare var $: any;
 
 @Component({
@@ -9,105 +12,154 @@ declare var $: any;
 })
 export class IntentAnalysisComponent implements OnInit {
 
-  constructor() { }
+  intentObj: IntentAnalysisService;
+  sessionData:any;
+  LoginBot: any;
+
+  constructor(private formBuilder: FormBuilder,intentObj: IntentAnalysisService,private router: Router) { 
+    this.intentObj = intentObj;
+  }
 
   ngOnInit(): void {
-    this.TopIntents();
-    this.BarChartNumbersPerIntent();
-    this.PieChartForPercentOfIntents();
-    this.SentimentAnalysis();
-  }
+    if (sessionStorage.getItem('LoginBot') == null || sessionStorage.getItem('LoginBot') == undefined
+      || sessionStorage.getItem('LoginBot') == 'null' || sessionStorage.getItem('LoginBot') == 'undefined') {
+      this.router.navigateByUrl('/login');
+    }
+    else {
+      
+      this.LoginBot = sessionStorage.getItem('LoginBot');
+      const body = JSON.parse(this.LoginBot);
 
-  TopIntents() {
-    var datawebsiteViewsChart = {
-      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      series: [
-        [5, 4, 3, 7, 5, 10, 3]
-      ]
-    };
-    var optionswebsiteViewsChart = {
-      horizontalBars: true,
-      axisY: {
-        showGrid: false,
-        offset:100
-      },
-      seriesBarDistance: 10,
-      low: 0,
-      high: 10,
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
-    };
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
-        }
-      }]
-    ];
-    var TopIntents = new Chartist.Bar('#TopIntents', datawebsiteViewsChart, optionswebsiteViewsChart,responsiveOptions);
-    this.startAnimationForBarChart(TopIntents);
-  }
+      this.TopIntents(body);
+      this.BarChartNumbersPerIntent(body);
+      this.PieChartForPercentOfIntents(body);
+      this.SentimentAnalysis(body);
 
-  BarChartNumbersPerIntent(){
-    var datawebsiteViewsChart = {
-      labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-      series: [
-        [5, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-      ]
-    };
-    var optionswebsiteViewsChart = {
-        axisX: {
-            showGrid: false
-        },
-        low: 0,
-        high: 1000,
-        chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
-    };
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
-        }
-      }]
-    ];
-    var BarChartNumbersPerIntent = new Chartist.Bar('#BarChartNumbersPerIntent', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
-    this.startAnimationForBarChart(BarChartNumbersPerIntent);
-  }
-
-  PieChartForPercentOfIntents(){
-    var data = {
-      labels: ['Bananas', 'Apples', 'Grapes'],
-      series: [5, 3, 4]
-    };
+    }
     
-    var sum = function(a, b) { return a + b };
-    
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
-        }
-      }]
-    ];
+  }
 
-    var PieChartForPercentOfIntents = new Chartist.Pie('#PieChartForPercentOfIntents', data, {
-      labelInterpolationFnc: function(value) {
-        return Math.round(value / data.series.reduce(sum) * 100) + '%';
+  TopIntents(body) {
+    body.start_date = "";
+    body.end_date = "";
+    
+    this.intentObj.GetTopIntent(body).subscribe((res) => {
+      console.log(res);
+      if (true) {
+        var datawebsiteViewsChart = {
+          labels: res.all_intents.labels,
+          series: [
+            res.all_intents.series
+          ]
+        };
+        var optionswebsiteViewsChart = {
+          horizontalBars: true,
+          axisY: {
+            showGrid: false,
+            offset: 100
+          },
+          seriesBarDistance: 10,
+          low: 0,
+          high: 1000,
+          chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+        };
+        var responsiveOptions: any[] = [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0];
+              }
+            }
+          }]
+        ];
+        var TopIntents = new Chartist.Bar('#TopIntents', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+        this.startAnimationForBarChart(TopIntents);
+      } else { 
+        this.showNotification(res.message, 4);
       }
-    },responsiveOptions);
-
-    this.startAnimationForBarChart(PieChartForPercentOfIntents);
+    });
   }
 
-  SentimentAnalysis(){
+  BarChartNumbersPerIntent(body){
+    body.start_date = "";
+    body.end_date = "";
+    this.intentObj.GetExitIntent(body).subscribe((res) => {
+      console.log(res);
+      if (true) {
+        var datawebsiteViewsChart = {
+          labels: res.exit_intents.labels,
+          series: [
+            res.exit_intents.series,
+          ]
+        };
+        var optionswebsiteViewsChart = {
+          axisX: {
+            showGrid: false
+          },
+          low: 0,
+          high: 10,
+          chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
+        };
+        var responsiveOptions: any[] = [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0];
+              }
+            }
+          }]
+        ];
+        var BarChartNumbersPerIntent = new Chartist.Bar('#BarChartNumbersPerIntent', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+        this.startAnimationForBarChart(BarChartNumbersPerIntent);
+      } else {
+        this.showNotification(res.message, 4);
+      }
+    });
+  }
+
+  PieChartForPercentOfIntents(body){ 
+    body.start_date = "";
+    body.end_date = "";
+
+    this.intentObj.GetExitIntentPercent(body).subscribe((res) => {
+      if (true) {
+        var data = {
+          labels: res.exit_intents_percent.labels,
+          series: res.exit_intents_percent.series
+        };
+
+        var sum = function (a, b) { return a + b };
+
+        var responsiveOptions: any[] = [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0];
+              }
+            }
+          }]
+        ];
+
+        var PieChartForPercentOfIntents = new Chartist.Pie('#PieChartForPercentOfIntents', data, {
+          labelInterpolationFnc: function (value) {
+            return Math.round(value / data.series.reduce(sum) * 100) + '%';
+          }
+        }, responsiveOptions);
+
+        this.startAnimationForBarChart(PieChartForPercentOfIntents);
+      } else {
+        this.showNotification(res.message, 4);
+      }
+    });
+  }
+
+  SentimentAnalysis(body){
+    body.start_date = "";
+    body.end_date = "";
+
     new Chartist.Bar('#SentimentAnalysis', {
       labels: ['Q1', 'Q2', 'Q3', 'Q4'],
       series: [
@@ -155,4 +207,31 @@ export class IntentAnalysisComponent implements OnInit {
 
     seq2 = 0;
   };
+
+  showNotification(Message, type) {
+    const types = ['', 'info', 'success', 'warning', 'danger'];
+    $.notify({
+      icon: "notifications",
+      message: Message
+
+    }, {
+      type: types[type],
+      timer: 1000,
+      placement: {
+        from: 'top',
+        align: 'center'
+      },
+      template:
+        '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">notifications</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
+    });
+  }
 }

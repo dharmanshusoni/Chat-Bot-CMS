@@ -26,8 +26,13 @@ export class SessionTableComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else {
+      
       this.LoginBot = sessionStorage.getItem('LoginBot');
-      this.sessionServiceObj.GetSessionTable(this.LoginBot ).subscribe((res) => {
+      const body = JSON.parse(this.LoginBot);
+      body.start_date = "";
+      body.end_date = "";
+
+      this.sessionServiceObj.GetSessionTable(body).subscribe((res) => {
         if (!res.hasOwnProperty('status')) {
           console.log(res);
           this.sessionData = res;
