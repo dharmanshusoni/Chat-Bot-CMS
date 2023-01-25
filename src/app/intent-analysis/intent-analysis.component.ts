@@ -81,6 +81,7 @@ export class IntentAnalysisComponent implements OnInit {
 
   PieChartForPercentOfIntents(){
     var data = {
+      labels: ['Bananas', 'Apples', 'Grapes'],
       series: [5, 3, 4]
     };
     

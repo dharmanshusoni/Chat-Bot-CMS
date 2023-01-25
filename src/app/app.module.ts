@@ -14,6 +14,10 @@ import { SessionTableComponent } from './session-table/session-table.component';
 import { SessionAnalysisComponent } from './session-analysis/session-analysis.component';
 import { IntentAnalysisComponent } from './intent-analysis/intent-analysis.component';
 import { FormsUserDataComponent } from './forms-user-data/forms-user-data.component';
+import { MatSelectModule} from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker'; 
+import { MatNativeDateModule } from '@angular/material/core'; 
+import { MatInputModule } from '@angular/material/input'; 
 
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { TableListComponent } from './table-list/table-list.component';
@@ -33,6 +37,10 @@ import { FormsUserDataComponent } from './forms-user-data/forms-user-data.compon
     RouterModule,
     AppRoutingModule,
     MatGridListModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import * as Chartist from 'chartist';
 declare var $: any;
 
@@ -9,7 +10,17 @@ declare var $: any;
 })
 export class SessionAnalysisComponent implements OnInit {
 
-  constructor() { }
+  range = ['Monthly','Yearly']
+  dateForm = this.formBuilder.group({
+    rangeType:'',
+    admDateRange: this.formBuilder.group({
+      startDate: '',
+      endDate: '',
+    })
+
+  }); 
+
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.TotalUniqueBotVisits();
@@ -130,5 +141,10 @@ export class SessionAnalysisComponent implements OnInit {
 
     seq2 = 0;
   };
+
+  onFormSubmit() {
+    console.log(this.dateForm.value);
+    this.dateForm.reset();
+  }
 
 }
