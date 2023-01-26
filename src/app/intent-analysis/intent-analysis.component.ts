@@ -160,27 +160,25 @@ export class IntentAnalysisComponent implements OnInit {
     body.start_date = "";
     body.end_date = "";
 
-    this.intentObj.GetExitIntentPercent(body).subscribe((res) => {
+    this.intentObj.GetSentiment(body).subscribe((res) => {
       if (true) {
         new Chartist.Bar('#SentimentAnalysis', {
-          labels: ['session_Id_1', 'session_Id_2', 'session_Id_3', 'session_Id_4'],
+          labels: res.sentiment_data.labels,
           series: [
-            [800000, 1200000, 1400000, 1300000], // denote nutural
-            [200000, 400000, 500000, 300000],  // denote negative
-            [100000, 200000, 400000, 600000] // denote positive
+            res.sentiment_data.series[0]
           ]
         }, {
           horizontalBars: true,
           stackBars: true,
           axisX: {
             labelInterpolationFnc: function (value) {
-              return (value / 1000) + 'k';
+              return (value / 10);
             }
           }
         }).on('draw', function (data) {
           if (data.type === 'bar') {
             data.element.attr({
-              style: 'stroke-width: 30px'
+              style: 'stroke-width: 10px'
             });
           }
         });

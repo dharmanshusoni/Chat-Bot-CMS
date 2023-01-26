@@ -31,11 +31,11 @@ export class SidebarComponent implements OnInit {
   moduleServiceObj: ModuleService;
 
   menuItemsCompleteSummary = [
-    { cclass: "",icon: "dashboard",moduleId: 1,path: "/dashboard",title: "Overview"},
-    { cclass: "",icon: "dashboard",moduleId: 1,path: "/session-table",title: "Session Table"},
-    { cclass: "",icon: "dashboard",moduleId: 1,path: "/session-analysis",title: "Session Analysis"},
-    { cclass: "",icon: "dashboard",moduleId: 1,path: "/intent-analysis",title: "Intent Analysis"},
-    { cclass: "",icon: "dashboard",moduleId: 1,path: "/forms-user-data",title: "Forms & User Data"},
+    { cclass: "",icon: "data_usage",moduleId: 1,path: "/dashboard",title: "Overview"},
+    { cclass: "",icon: "leaderboard",moduleId: 1,path: "/session-table",title: "Session Table"},
+    { cclass: "",icon: "analytics",moduleId: 1,path: "/session-analysis",title: "Session Analysis"},
+    { cclass: "",icon: "insights",moduleId: 1,path: "/intent-analysis",title: "Intent Analysis"},
+    { cclass: "",icon: "query_stats",moduleId: 1,path: "/forms-user-data",title: "Forms & User Data"},
   ];
 
   // menuItemsChannelWiseSummary = [
