@@ -14,10 +14,12 @@ export class IntentAnalysisComponent implements OnInit {
 
   intentObj: IntentAnalysisService;
   sessionData:any;
+  fallbackData:any;
   LoginBot: any;
 
   constructor(private formBuilder: FormBuilder,intentObj: IntentAnalysisService,private router: Router) { 
     this.intentObj = intentObj;
+    this.fallbackData = [];
   }
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class IntentAnalysisComponent implements OnInit {
       this.BarChartNumbersPerIntent(body);
       this.PieChartForPercentOfIntents(body);
       this.SentimentAnalysis(body);
-
+      this.FallbackData(body);
     }
     
   }
@@ -185,6 +187,16 @@ export class IntentAnalysisComponent implements OnInit {
       } else {
         this.showNotification(res.message, 4);
       }
+    });
+  }
+
+  FallbackData(body){
+    body.start_date = "";
+    body.end_date = "";
+
+    this.intentObj.GetFallbackData(body).subscribe((res) => {
+      this.fallbackData = res.fallback_data;
+      console.log(this.fallbackData);
     });
   }
 
