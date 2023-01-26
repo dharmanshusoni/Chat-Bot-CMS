@@ -126,7 +126,7 @@ export class IntentAnalysisComponent implements OnInit {
     this.intentObj.GetExitIntentPercent(body).subscribe((res) => {
       if (true) {
         var data = {
-          labels: res.exit_intents_percent.labels,
+          //labels: res.exit_intents_percent.labels,
           series: res.exit_intents_percent.series
         };
 
@@ -144,8 +144,8 @@ export class IntentAnalysisComponent implements OnInit {
         ];
 
         var PieChartForPercentOfIntents = new Chartist.Pie('#PieChartForPercentOfIntents', data, {
-          labelInterpolationFnc: function (value) {
-            return Math.round(value / data.series.reduce(sum) * 100) + '%';
+          labelInterpolationFnc: function (value,i) {
+            return Math.round(value / data.series.reduce(sum) * 100) + '%' +' '+ res.exit_intents_percent.labels[i++];
           }
         }, responsiveOptions);
 
@@ -160,26 +160,32 @@ export class IntentAnalysisComponent implements OnInit {
     body.start_date = "";
     body.end_date = "";
 
-    new Chartist.Bar('#SentimentAnalysis', {
-      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-      series: [
-        [800000, 1200000, 1400000, 1300000],
-        [200000, 400000, 500000, 300000],
-        [100000, 200000, 400000, 600000]
-      ]
-    }, {
-      horizontalBars: true,
-      stackBars: true,
-      axisY: {
-        labelInterpolationFnc: function(value) {
-          return (value / 1000) + 'k';
-        }
-      }
-    }).on('draw', function(data) {
-      if(data.type === 'bar') {
-        data.element.attr({
-          style: 'stroke-width: 30px'
+    this.intentObj.GetExitIntentPercent(body).subscribe((res) => {
+      if (true) {
+        new Chartist.Bar('#SentimentAnalysis', {
+          labels: ['session_Id_1', 'session_Id_2', 'session_Id_3', 'session_Id_4'],
+          series: [
+            [800000, 1200000, 1400000, 1300000], // denote nutural
+            [200000, 400000, 500000, 300000],  // denote negative
+            [100000, 200000, 400000, 600000] // denote positive
+          ]
+        }, {
+          horizontalBars: true,
+          stackBars: true,
+          axisX: {
+            labelInterpolationFnc: function (value) {
+              return (value / 1000) + 'k';
+            }
+          }
+        }).on('draw', function (data) {
+          if (data.type === 'bar') {
+            data.element.attr({
+              style: 'stroke-width: 30px'
+            });
+          }
         });
+      } else {
+        this.showNotification(res.message, 4);
       }
     });
   }
