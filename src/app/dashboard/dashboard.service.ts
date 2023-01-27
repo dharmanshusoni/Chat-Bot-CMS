@@ -23,7 +23,6 @@ export class DashboardService {
       'Access-Control-Allow-Credentials': 'true'
     }
     const body = JSON.parse(bot);
-    //console.log(body);
     return this.http.post(api_URL + POST_OVERVIEW , body, { 'headers': headers });
   }
 }

@@ -31,7 +31,6 @@ export class NavbarComponent implements OnInit {
     }
     GetModules() {
         // this.moduleServiceObj.GetModules(0).subscribe((res) => {
-        //     console.log(res);
         //     if (res.count == 0) {
         //     }
         //     else if (res.count > 0) {

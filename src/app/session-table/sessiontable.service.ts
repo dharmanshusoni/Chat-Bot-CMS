@@ -22,7 +22,6 @@ export class SessionTableService {
       'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
       'Access-Control-Allow-Credentials': 'true'
     }
-    //console.log(body);
     return this.http.post(api_URL + POST_SESSION_TABLE , bot, { 'headers': headers });
   }
 }

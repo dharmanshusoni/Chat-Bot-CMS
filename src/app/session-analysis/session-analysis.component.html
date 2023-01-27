@@ -6,8 +6,8 @@
                     <form [formGroup]="dateForm" (ngSubmit)="onFormSubmit()" class="form-inline">
                         <mat-form-field appearance="fill">
                             <mat-label>Date Range</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let item of range" [value]="item" formControlName="rangeType">
+                            <mat-select  formControlName="rangeType">
+                                <mat-option *ngFor="let item of range" [value]="item">
                                     {{item}}
                                 </mat-option>
                             </mat-select>

@@ -55,7 +55,6 @@ export class SidebarComponent implements OnInit {
 
   GetModules(){
     // this.moduleServiceObj.GetModules(0).subscribe((res) => {
-    //   console.log(res);
     //   if (res.count == 0) {
     //     this.showNotification(res.message, 4);
     //   }

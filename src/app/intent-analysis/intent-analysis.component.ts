@@ -46,7 +46,7 @@ export class IntentAnalysisComponent implements OnInit {
     body.end_date = "";
     
     this.intentObj.GetTopIntent(body).subscribe((res) => {
-      console.log(res);
+
       if (true) {
         var datawebsiteViewsChart = {
           labels: res.all_intents.labels,
@@ -87,7 +87,7 @@ export class IntentAnalysisComponent implements OnInit {
     body.start_date = "";
     body.end_date = "";
     this.intentObj.GetExitIntent(body).subscribe((res) => {
-      console.log(res);
+
       if (true) {
         var datawebsiteViewsChart = {
           labels: res.exit_intents.labels,
@@ -196,7 +196,6 @@ export class IntentAnalysisComponent implements OnInit {
 
     this.intentObj.GetFallbackData(body).subscribe((res) => {
       this.fallbackData = res.fallback_data;
-      console.log(this.fallbackData);
     });
   }
 

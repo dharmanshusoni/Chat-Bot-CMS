@@ -34,7 +34,6 @@ export class SessionTableComponent implements OnInit {
 
       this.sessionServiceObj.GetSessionTable(body).subscribe((res) => {
         if (!res.hasOwnProperty('status')) {
-          console.log(res);
           this.sessionData = res;
         }
         else {

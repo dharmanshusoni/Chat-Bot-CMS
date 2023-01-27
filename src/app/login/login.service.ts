@@ -26,7 +26,7 @@ export class LoginService {
       'Access-Control-Allow-Credentials': 'true'
     }
     const body = JSON.stringify(user);
-    console.log(body);
+
     return this.http.post(api_URL + POST_LOGIN , body, { 'headers': headers });
   }
 }

@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
   signin() {
     this.loginServiceObj.Login(this.userModel).subscribe((res) => {
-      console.log(res);
+
       if (res.status == 'Success') {
         this.showNotification('Logged In Successfull', 2);
         this.bot_id = res.bot_id;

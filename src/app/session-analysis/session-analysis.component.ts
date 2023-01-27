@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,7 +16,7 @@ export class SessionAnalysisComponent implements OnInit {
   sessionanalysisObj: SessionAnalysisService;
   sessionData:any;
   LoginBot: any;
-  range = ['Monthly','Yearly']
+  range = ['day','monthly','yearly']
   dateForm = this.formBuilder.group({
     rangeType:'',
     admDateRange: this.formBuilder.group({
@@ -25,7 +26,7 @@ export class SessionAnalysisComponent implements OnInit {
 
   }); 
 
-  constructor(private formBuilder: FormBuilder,sessionanalysisObj: SessionAnalysisService,private router: Router) {
+  constructor(private formBuilder: FormBuilder,sessionanalysisObj: SessionAnalysisService,private router: Router,private datePipe: DatePipe) {
     this.sessionanalysisObj = sessionanalysisObj;
    }
 
@@ -38,6 +39,9 @@ export class SessionAnalysisComponent implements OnInit {
       
       this.LoginBot = sessionStorage.getItem('LoginBot');
       const body = JSON.parse(this.LoginBot);
+      body.start_date = "";
+      body.end_date = "";
+      body.format = 'day';
 
       this.TotalUniqueBotVisits(body);
       this.TotalBotConversation(body);
@@ -48,12 +52,9 @@ export class SessionAnalysisComponent implements OnInit {
   }
 
   TotalUniqueBotVisits(body){
-    body.start_date = "";
-    body.end_date = "";
-    body.format = 'day';
 
     this.sessionanalysisObj.GetSessionAnalysis(body).subscribe((res) => {
-      console.log(res);
+
       if (true){//(!res.hasOwnProperty('status')) {
 
         var datawebsiteViewsChart = {
@@ -90,9 +91,6 @@ export class SessionAnalysisComponent implements OnInit {
   }
 
   TotalBotConversation(body){
-    body.start_date = "";
-    body.end_date = "";
-    body.format = 'day';
     
     this.sessionanalysisObj.GetSessionAnalysis(body).subscribe((res) => {
       if (true) {
@@ -131,12 +129,9 @@ export class SessionAnalysisComponent implements OnInit {
   }
 
   InteractionRate(body){
-    body.start_date = "";
-    body.end_date = "";
-    body.format = 'day';
 
     this.sessionanalysisObj.GetSessionAnalysis(body).subscribe((res) => {
-      console.log(res);
+
       if (true) {
         var datawebsiteViewsChart = {
           labels: res.interaction_rate.labels,
@@ -196,8 +191,17 @@ export class SessionAnalysisComponent implements OnInit {
   };
 
   onFormSubmit() {
-    console.log(this.dateForm.value);
-    this.dateForm.reset();
+
+    var dateRange = this.dateForm.value
+    const body = JSON.parse(this.LoginBot);
+    body.start_date = this.datePipe.transform(dateRange.admDateRange.startDate, 'dd-MM-yyyy');
+    body.end_date = this.datePipe.transform(dateRange.admDateRange.endDate, 'dd-MM-yyyy');
+    body.format = dateRange.rangeType;
+
+    this.TotalUniqueBotVisits(body);
+    this.TotalBotConversation(body);
+    this.InteractionRate(body);
+    //this.dateForm.reset();
   }
 
   showNotification(Message, type) {
