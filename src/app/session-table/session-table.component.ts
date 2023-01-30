@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionTableService } from './sessiontable.service';
 declare var $: any;
@@ -15,7 +15,8 @@ export class SessionTableComponent implements OnInit {
   LoginBot: any;
   sessionData:any;
   showID='';
-
+  search='';
+  
   constructor(sessionServiceObj: SessionTableService, private router: Router, private http: HttpClient) {
     this.sessionServiceObj = sessionServiceObj;
   }
@@ -77,4 +78,20 @@ export class SessionTableComponent implements OnInit {
     });
   }
 
+}
+
+@Pipe({
+  name: 'tableFilter'
+})
+export class TableFilterPipe implements PipeTransform {
+  transform(items: any[], searchText: string): any[] {
+    if (!items) return [];
+    if (!searchText) return items;
+  
+    return items.filter(item => {
+      return Object.keys(item).some(key => {
+        return String(item[key]).toLowerCase().includes(searchText.toLowerCase());
+      });
+    });
+   }
 }

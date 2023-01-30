@@ -53,7 +53,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatNativeDateModule,
     MatCheckboxModule,
     MatSliderModule,
-    MatIconModule
+    MatIconModule,    
   ],
   declarations: [
     DashboardComponent,
@@ -64,6 +64,7 @@ import {MatIconModule} from '@angular/material/icon';
     NotificationsComponent,
     UpgradeComponent,
     LoginComponent,
+    
     // FarmComponent,
     // PestComponent,
     // CropsComponent,

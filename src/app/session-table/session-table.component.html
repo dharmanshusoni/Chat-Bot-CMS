@@ -4,12 +4,15 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Session Table</h4>
-                        <p class="card-category"> Here is a chat bot sessions</p>
+                        <h4 class="card-title" style="float: left;">Session Table</h4>
+                        <!-- <p class="card-category"> Here is a chat bot sessions</p> -->
+                        <mat-form-field class="example-full-width" style="float: right;width: 300px;">
+                            <input matInput placeholder="search" type="text" [(ngModel)]="search">
+                        </mat-form-field>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table" >
+                            <table class="table" *ngIf="(sessionData | tableFilter: search).length > 0; else noResults" >
                                 <thead class=" text-primary">
                                     <th>Session ID</th>
                                     <th>Inti TIme</th>
@@ -19,7 +22,7 @@
                                     <th>Status</th>
                                     <th>History</th>
                                 </thead>
-                                <tbody *ngFor="let item of sessionData">
+                                <tbody *ngFor="let item of sessionData | tableFilter: search; let i = index">
                                     <tr>
                                         <td>{{item._id}}</td>
                                         <td>{{item.init_time}}</td>
@@ -51,10 +54,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <table class="table">
-                                <!-- <thead></thead> -->
-                               
-                            </table>
+                            <ng-template #noResults>
+                                <p>No results found for "{{searchText}}".</p>
+                              </ng-template>
                         </div>
                     </div>
                 </div>
