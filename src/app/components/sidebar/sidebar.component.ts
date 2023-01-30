@@ -29,6 +29,7 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   
   moduleServiceObj: ModuleService;
+  logo = '';
 
   menuItemsCompleteSummary = [
     { cclass: "",icon: "data_usage",moduleId: 1,path: "/dashboard",title: "Overview"},
@@ -51,6 +52,8 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     //this.menuItems = ROUTES.filter(menuItem => menuItem);
     //this.GetModules();
+    this.logo = sessionStorage.getItem('Logo');
+    console.log(this.logo);
   }
 
   GetModules(){

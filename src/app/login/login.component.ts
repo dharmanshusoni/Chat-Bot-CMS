@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
           bot_id:res.bot_id,
           client:this.client
         }
+        sessionStorage.setItem('Logo', res.image_url);
         sessionStorage.setItem('LoginBot', JSON.stringify(request_bot)); 
         this.router.navigateByUrl('/dashboard');
       }
