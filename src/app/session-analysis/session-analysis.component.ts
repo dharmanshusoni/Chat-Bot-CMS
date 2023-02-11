@@ -194,8 +194,8 @@ export class SessionAnalysisComponent implements OnInit {
 
     var dateRange = this.dateForm.value
     const body = JSON.parse(this.LoginBot);
-    body.start_date = this.datePipe.transform(dateRange.admDateRange.startDate, 'dd-MM-yyyy');
-    body.end_date = this.datePipe.transform(dateRange.admDateRange.endDate, 'dd-MM-yyyy');
+    body.start_date = this.datePipe.transform(dateRange.admDateRange.startDate, 'YYYY-MM-dd');
+    body.end_date = this.datePipe.transform(dateRange.admDateRange.endDate, 'YYYY-MM-dd');
     body.format = dateRange.rangeType;
 
     this.TotalUniqueBotVisits(body);

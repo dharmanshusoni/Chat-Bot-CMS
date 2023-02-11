@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SessionTableService } from 'app/session-table/sessiontable.service';
 import * as Chartist from 'chartist';
 import { IntentAnalysisService } from './intentanalysis.service';
 declare var $: any;
@@ -11,15 +12,21 @@ declare var $: any;
   styleUrls: ['./intent-analysis.component.scss']
 })
 export class IntentAnalysisComponent implements OnInit {
-
+  sessionServiceObj: SessionTableService;
   intentObj: IntentAnalysisService;
   sessionData:any;
   fallbackData:any;
   LoginBot: any;
-
-  constructor(private formBuilder: FormBuilder,intentObj: IntentAnalysisService,private router: Router) { 
+  search='';
+  showID='';
+  LastIntentList = [];
+  selectedLastIntent='';
+  filteredSessionData = [];
+  
+  constructor(private formBuilder: FormBuilder,intentObj: IntentAnalysisService,sessionServiceObj: SessionTableService,private router: Router) { 
     this.intentObj = intentObj;
     this.fallbackData = [];
+    this.sessionServiceObj = sessionServiceObj;
   }
 
   ngOnInit(): void {
@@ -37,6 +44,7 @@ export class IntentAnalysisComponent implements OnInit {
       this.PieChartForPercentOfIntents(body);
       this.SentimentAnalysis(body);
       this.FallbackData(body);
+      this.SessionTable(body);
     }
     
   }
@@ -196,7 +204,39 @@ export class IntentAnalysisComponent implements OnInit {
 
     this.intentObj.GetFallbackData(body).subscribe((res) => {
       this.fallbackData = res.fallback_data;
+      console.log("this.fallbackData");
+      console.log(res);
     });
+  }
+
+  SessionTable(body){
+    this.sessionServiceObj.GetSessionTable(body).subscribe((res) => {
+      if (!res.hasOwnProperty('status')) {
+        this.sessionData = res;
+        this.filteredSessionData = res;
+        this.LastIntentList = res.filter((item, i, arr) => arr.findIndex((t) => t.last_intent=== item.last_intent) === i);
+      }
+      else {
+        this.showNotification(res.message, 4);
+      }
+    });
+  }
+
+  LastIntentFilter(event){
+    console.log(event.value);
+    const body = JSON.parse(this.LoginBot);
+    body.start_date = '';
+    body.end_date = '';
+    body.format = 'day';
+    this.filteredSessionData = this.sessionData.filter((item) => item.last_intent=== event.value);
+    console.log(this.sessionData);
+  }
+
+  getID(ID:any){
+    if(this.showID == ID)
+     return this.showID = "";
+    
+     return this.showID = ID;
   }
 
   startAnimationForBarChart(chart) {

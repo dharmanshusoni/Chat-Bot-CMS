@@ -53,7 +53,7 @@ import { MatInputModule } from '@angular/material/input';
     SessionAnalysisComponent,
     IntentAnalysisComponent,
     FormsUserDataComponent,
-    TableFilterPipe 
+    TableFilterPipe,
   ],
   providers: [],
   bootstrap: [AppComponent]

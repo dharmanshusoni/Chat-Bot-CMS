@@ -1,6 +1,30 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
+            <div class="row col-md-12">
+                <div class="d-flex justify-content-end">
+                    <form [formGroup]="dateForm" (ngSubmit)="onFormSubmit()" class="form-inline">                    
+                        <mat-form-field>
+                            <mat-label>Custome Dates</mat-label>
+                            <mat-date-range-input [rangePicker]="admDateRangePicker"  formGroupName="admDateRange">
+                              <input matStartDate formControlName="startDate" placeholder="Start date">
+                              <input matEndDate formControlName="endDate" placeholder="End date">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="admDateRangePicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #admDateRangePicker></mat-date-range-picker>
+                          
+                            <mat-error *ngIf="dateForm.get('admDateRange').get('startDate').hasError('matStartDateInvalid')">
+                              Invalid start date
+                            </mat-error>
+                            <mat-error *ngIf="dateForm.get('admDateRange').get('endDate').hasError('matEndDateInvalid')">
+                              Invalid end date
+                            </mat-error>    
+                          </mat-form-field> 
+
+                          <button class="btn btn-primary" style="margin: -20px 0px 0px 20px;">Submit</button>
+                    </form>
+                </div>
+            </div>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
@@ -55,7 +79,7 @@
                                 </tbody>
                             </table>
                             <ng-template #noResults>
-                                <p>No results found for "{{searchText}}".</p>
+                                <p>No results found for "{{search}}".</p>
                               </ng-template>
                         </div>
                     </div>

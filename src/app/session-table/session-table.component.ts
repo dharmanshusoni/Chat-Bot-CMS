@@ -1,5 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SessionTableService } from './sessiontable.service';
 declare var $: any;
@@ -16,8 +18,15 @@ export class SessionTableComponent implements OnInit {
   sessionData:any;
   showID='';
   search='';
-  
-  constructor(sessionServiceObj: SessionTableService, private router: Router, private http: HttpClient) {
+  dateForm = this.formBuilder.group({
+    rangeType:'',
+    admDateRange: this.formBuilder.group({
+      startDate: '',
+      endDate: '',
+    })
+
+  }); 
+  constructor(private formBuilder: FormBuilder,sessionServiceObj: SessionTableService, private router: Router, private http: HttpClient,private datePipe: DatePipe) {
     this.sessionServiceObj = sessionServiceObj;
   }
 
@@ -49,6 +58,23 @@ export class SessionTableComponent implements OnInit {
      return this.showID = "";
     
      return this.showID = ID;
+  }
+
+  onFormSubmit() {
+
+    var dateRange = this.dateForm.value
+    const body = JSON.parse(this.LoginBot);
+    body.start_date = this.datePipe.transform(dateRange.admDateRange.startDate, 'YYYY-MM-dd');
+    body.end_date = this.datePipe.transform(dateRange.admDateRange.endDate, 'YYYY-MM-dd');
+    body.format = dateRange.rangeType;
+    this.sessionServiceObj.GetSessionTable(body).subscribe((res) => {
+      if (!res.hasOwnProperty('status')) {
+        this.sessionData = res;
+      }
+      else {
+        this.showNotification(res.message, 4);
+      }
+    });
   }
 
   showNotification(Message, type) {
