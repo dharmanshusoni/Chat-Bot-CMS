@@ -1,7 +1,40 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="col-md-12">
-            <div class="row" *ngFor="let item of formData" >
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row card">
+                        
+                        <form [formGroup]="dateForm" (ngSubmit)="onFormSubmit()" class="form-inline">   
+                            
+
+                            <mat-form-field style="margin:5px 5px -10px 5px;font-size: 11px;">
+                                <mat-label>Custome Dates</mat-label>
+                                <mat-date-range-input [rangePicker]="admDateRangePicker"  formGroupName="admDateRange">
+                                  <input matStartDate formControlName="startDate" placeholder="Start date">
+                                  <input matEndDate formControlName="endDate" placeholder="End date">
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="admDateRangePicker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #admDateRangePicker></mat-date-range-picker>
+                              
+                                <mat-error *ngIf="dateForm.get('admDateRange').get('startDate').hasError('matStartDateInvalid')">
+                                  Invalid start date
+                                </mat-error>
+                                <mat-error *ngIf="dateForm.get('admDateRange').get('endDate').hasError('matEndDateInvalid')">
+                                  Invalid end date
+                                </mat-error>    
+                              </mat-form-field> 
+    
+                              <button class="btn btn-primary" >Submit</button>
+
+                              <button class="btn btn-warning" type="button"  style="margin-left: 260px;">Download</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row" *ngFor="let item of formData">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <div class="row card">
@@ -12,12 +45,14 @@
                                     <th scope="col">{{item.session_id}}</th>
                                 </tr>
                             </thead>
-                            <tbody *ngFor="let bodyitem of item.session_data" >
-                                <tr *ngFor="let i of bodyitem | keyvalue" >
-                                    
-                                    <td class="bold" [class.bold] = "i.key === 'form_title' || i.key === 'form_titel'">{{i.key}}</td>
-                                    <td class="bold" [class.bold] = "i.key === 'form_title' || i.key === 'form_titel'">{{i.value}}</td>
-                                
+                            <tbody *ngFor="let bodyitem of item.session_data">
+                                <tr *ngFor="let i of bodyitem | keyvalue">
+
+                                    <td class="bold" [class.bold]="i.key === 'form_title' || i.key === 'form_titel'">
+                                        {{i.key}}</td>
+                                    <td class="bold" [class.bold]="i.key === 'form_title' || i.key === 'form_titel'">
+                                        {{i.value}}</td>
+
                                 </tr>
                             </tbody>
                         </table>

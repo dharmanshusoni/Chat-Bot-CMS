@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,8 +15,15 @@ export class FormsUserDataComponent implements OnInit {
   formServiceObj: FormUsersService;
   formData:any;
   LoginBot: any;
+  dateForm = this.formBuilder.group({
+    rangeType:'',
+    admDateRange: this.formBuilder.group({
+      startDate: '',
+      endDate: '',
+    })
 
-  constructor(private formBuilder: FormBuilder,formObj: FormUsersService,private router: Router) {
+  }); 
+  constructor(private formBuilder: FormBuilder,formObj: FormUsersService,private router: Router,private datePipe: DatePipe) {
     this.formServiceObj = formObj;
    }
 
@@ -34,6 +42,24 @@ export class FormsUserDataComponent implements OnInit {
   FormTable(body){
     body.start_date = '';
     body.end_date = '';
+    this.formServiceObj.GetFormData(body).subscribe((res) => {
+      if (!res.hasOwnProperty('status')) {
+        this.formData = res;
+        console.log(this.formData);
+        //this.LastIntentList = res.filter((item, i, arr) => arr.findIndex((t) => t.last_intent=== item.last_intent) === i);
+      }
+      else {
+        this.showNotification(res.message, 4);
+      }
+    });
+  }
+
+  onFormSubmit() {
+
+    var dateRange = this.dateForm.value
+    const body = JSON.parse(this.LoginBot);
+    body.start_date = this.datePipe.transform(dateRange.admDateRange.startDate, 'YYYY-MM-dd');
+    body.end_date = this.datePipe.transform(dateRange.admDateRange.endDate, 'YYYY-MM-dd');
     this.formServiceObj.GetFormData(body).subscribe((res) => {
       if (!res.hasOwnProperty('status')) {
         this.formData = res;

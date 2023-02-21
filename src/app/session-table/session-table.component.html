@@ -1,30 +1,37 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="row col-md-12">
-                <div class="d-flex justify-content-end">
-                    <form [formGroup]="dateForm" (ngSubmit)="onFormSubmit()" class="form-inline">                    
-                        <mat-form-field>
+            <div class="col-md-12">
+
+                <div class="row card" style="margin: 0px 0px 0px 0px;">
+                    <form [formGroup]="dateForm" style="margin:5px 5px -10px 5px;" (ngSubmit)="onFormSubmit()"
+                        class="form-inline">
+                        <mat-form-field style="font-size: 11px;">
                             <mat-label>Custome Dates</mat-label>
-                            <mat-date-range-input [rangePicker]="admDateRangePicker"  formGroupName="admDateRange">
-                              <input matStartDate formControlName="startDate" placeholder="Start date">
-                              <input matEndDate formControlName="endDate" placeholder="End date">
+                            <mat-date-range-input [rangePicker]="admDateRangePicker" formGroupName="admDateRange">
+                                <input matStartDate formControlName="startDate" placeholder="Start date">
+                                <input matEndDate formControlName="endDate" placeholder="End date">
                             </mat-date-range-input>
                             <mat-datepicker-toggle matSuffix [for]="admDateRangePicker"></mat-datepicker-toggle>
                             <mat-date-range-picker #admDateRangePicker></mat-date-range-picker>
-                          
-                            <mat-error *ngIf="dateForm.get('admDateRange').get('startDate').hasError('matStartDateInvalid')">
-                              Invalid start date
-                            </mat-error>
-                            <mat-error *ngIf="dateForm.get('admDateRange').get('endDate').hasError('matEndDateInvalid')">
-                              Invalid end date
-                            </mat-error>    
-                          </mat-form-field> 
 
-                          <button class="btn btn-primary" style="margin: -20px 0px 0px 20px;">Submit</button>
+                            <mat-error
+                                *ngIf="dateForm.get('admDateRange').get('startDate').hasError('matStartDateInvalid')">
+                                Invalid start date
+                            </mat-error>
+                            <mat-error
+                                *ngIf="dateForm.get('admDateRange').get('endDate').hasError('matEndDateInvalid')">
+                                Invalid end date
+                            </mat-error>
+                        </mat-form-field>
+
+                        <button class="btn btn-primary" style="margin:-15px 0px 0px 10px">Submit</button>
                     </form>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
@@ -36,7 +43,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table" *ngIf="(sessionData | tableFilter: search).length > 0; else noResults" >
+                            <table class="table" *ngIf="(sessionData | tableFilter: search).length > 0; else noResults">
                                 <thead class=" text-primary">
                                     <th>Session ID</th>
                                     <th>Inti TIme</th>
@@ -55,12 +62,13 @@
                                         <td>{{item.last_intent}}</td>
                                         <td>{{item.session_status}}</td>
                                         <td class="text-primary" style="cursor: pointer;">
-                                            <span (click)="getID(item._id)" >View History</span>
+                                            <span (click)="getID(item._id)">View History</span>
                                         </td>
                                     </tr>
-                                    <tr *ngIf="item._id == showID" >
+                                    <tr *ngIf="item._id == showID">
                                         <td id="{{item._id}}" colspan="7">
-                                            <table class="table" style="background-color: rgb(247, 247, 247);border: 1px solid #9c27b0 ">
+                                            <table class="table"
+                                                style="background-color: rgb(247, 247, 247);border: 1px solid #9c27b0 ">
                                                 <thead class=" text-primary">
                                                     <th>Sentiment</th>
                                                     <th>User Response</th>
@@ -80,7 +88,7 @@
                             </table>
                             <ng-template #noResults>
                                 <p>No results found for "{{search}}".</p>
-                              </ng-template>
+                            </ng-template>
                         </div>
                     </div>
                 </div>
